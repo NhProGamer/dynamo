@@ -1,0 +1,84 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="dGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0099CC;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="nodeGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00FF87;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00CC6A;stop-opacity:1" />
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+      <feMerge>
+        <feMergeNode in="coloredBlur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="glow2" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+      <feOffset in="blur" dx="0" dy="0" result="offset" />
+      <feFlood flood-color="#00D4FF" flood-opacity="0.6" result="color" />
+      <feComposite in="color" in2="offset" operator="in" result="glow" />
+      <feMerge>
+        <feMergeNode in="glow" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="connectionGlow">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur" />
+      <feMerge>
+        <feMergeNode in="coloredBlur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="128" height="128" fill="#1a1a1a" rx="16" />
+  <g stroke="#4ADEEF" stroke-width="2.5" opacity="0.9" filter="url(#connectionGlow)">
+    <line x1="32" y1="32" x2="50" y2="50" />
+    <line x1="96" y1="32" x2="78" y2="50" />
+    <line x1="32" y1="96" x2="50" y2="78" />
+    <line x1="96" y1="96" x2="78" y2="78" />
+    <line x1="78" y1="64" x2="96" y2="64" />
+  </g>
+  <g filter="url(#glow)">
+    <circle cx="32" cy="32" r="6" fill="url(#nodeGradient)" />
+    <circle cx="96" cy="32" r="6" fill="url(#nodeGradient)" />
+    <circle cx="32" cy="96" r="6" fill="url(#nodeGradient)" />
+    <circle cx="96" cy="96" r="6" fill="url(#nodeGradient)" />
+    <circle cx="96" cy="64" r="6" fill="url(#nodeGradient)" />
+  </g>
+  <path d="M 50 40 
+           L 50 88 
+           L 70 88 
+           C 80 88 86 82 86 74
+           L 86 54
+           C 86 46 80 40 70 40
+           Z" fill="url(#dGradient)" stroke="#00D4FF" stroke-width="1" filter="url(#glow2)" />
+  <g filter="glow2">
+    <path d="M 50 40 
+             L 50 88 
+             L 70 88 
+             C 80 88 86 82 86 74
+             L 86 54
+             C 86 46 80 40 70 40
+             Z" fill="url(#dGradient)" stroke="#00D4FF" stroke-width="1" />
+    <path d="
+  M56 46
+  H72
+  C76 46, 80 50, 80 54
+  V74
+  C80 78, 76 82, 72 82
+  H56
+  Z
+" fill="#1a1a1a" />
+  </g>
+
+  <text x="64" y="115" 
+        font-family="Arial, sans-serif" 
+        font-size="12" 
+        font-weight="bold" 
+        fill="#00D4FF" 
+        text-anchor="middle">DYNAMO</text>
+
+</svg>
