@@ -35,7 +35,7 @@ docker run -d --name nats -p 4222:4222 nats:latest
 
 ### 2. Build des plugins
 ```bash
-git clone https://github.com/votre-repo/dynamo.git
+git clone https://github.com/NhProGamer/dynamo.git
 cd dynamo
 ./gradlew buildAll
 ```
