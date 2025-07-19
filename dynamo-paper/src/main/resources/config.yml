@@ -23,10 +23,10 @@ server:
     - "hub"
   
   # Port du serveur Minecraft
-  port: 25565
+  port: 0 # 0 = Détection automatique
   
-  # Adresse IP publique (auto-détectée si vide)
-  host: ""
+  # Adresse IP
+  host: "" # "" = Détection automatique
   
   # Intervalle des heartbeats (secondes)
   heartbeat-interval: 1
