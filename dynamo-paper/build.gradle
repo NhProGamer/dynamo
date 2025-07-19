@@ -1,0 +1,74 @@
+plugins {
+    id("xyz.jpenilla.run-paper") version "2.3.1"
+}
+
+dependencies {
+    // Module commun
+    implementation project(':dynamo-common')
+
+    // Protobuf (nécessaire pour les exceptions et classes)
+    implementation 'com.google.protobuf:protobuf-java:4.28.2'
+
+    // PaperMC API
+    compileOnly 'io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT'
+
+    // NATS Client
+    implementation 'io.nats:jnats:2.17.2'
+
+    // Logging (provided by Paper)
+    compileOnly 'org.slf4j:slf4j-api:2.0.9'
+
+    // SnakeYAML (provided by Paper)
+    compileOnly 'org.yaml:snakeyaml:2.2'
+}
+
+jar {
+    archiveBaseName = 'dynamo-paper'
+    archiveVersion = version
+}
+
+shadowJar {
+    archiveBaseName = 'dynamo-paper'
+    archiveVersion = version
+    archiveClassifier = ''
+
+    // Relocation des dépendances
+    relocate 'io.nats', 'fr.nhsoul.dynamo.paper.libs.nats'
+    relocate 'com.google.protobuf', 'fr.nhsoul.dynamo.paper.libs.protobuf'
+
+    // Exclusions
+    exclude 'META-INF/DEPENDENCIES'
+    exclude 'META-INF/LICENSE*'
+    exclude 'META-INF/NOTICE*'
+    exclude 'META-INF/maven/**'
+    exclude 'META-INF/versions/**'
+
+    minimize()
+
+    manifest {
+        attributes(
+                'Implementation-Title': 'Dynamo Paper',
+                'Implementation-Version': version,
+                'Implementation-Vendor': 'Dynamo Team'
+        )
+    }
+}
+
+tasks {
+    runServer {
+        minecraftVersion("1.21")
+    }
+}
+
+processResources {
+    filteringCharset = 'UTF-8'
+
+    filesMatching('plugin.yml') {
+        expand(
+                'version': version,
+                'group': group,
+                'name': 'DynamoPaper',
+                'main': 'fr.nhsoul.dynamo.paper.DynamoPaperPlugin'
+        )
+    }
+}

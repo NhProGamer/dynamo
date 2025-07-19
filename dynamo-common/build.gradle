@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+    id 'com.google.protobuf' version '0.9.4'
+}
+
+dependencies {
+    // Protobuf au lieu de Gson
+    implementation 'com.google.protobuf:protobuf-java:4.28.2'
+    implementation 'org.slf4j:slf4j-api:2.0.9'
+
+    // Optionnel : annotations pour améliorer le code
+    compileOnly 'org.jetbrains:annotations:24.1.0'
+}
+
+// Configuration Protobuf
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:4.28.2"
+    }
+
+    // Configurer les répertoires
+    generatedFilesBaseDir = "$projectDir/build/generated"
+}
+
+// Configuration pour publier le module commun
+jar {
+    archiveBaseName = 'dynamo-common'
+    archiveVersion = version
+
+    // Inclure les classes générées par Protobuf
+    from sourceSets.main.output
+
+    manifest {
+        attributes(
+                'Implementation-Title': 'Dynamo Common',
+                'Implementation-Version': version,
+                'Implementation-Vendor': 'Dynamo Team'
+        )
+    }
+}
+
+// S'assurer que la compilation proto se fait avant la compilation Java
+compileJava.dependsOn 'generateProto'
+
+// Nettoyer aussi les fichiers générés
+clean {
+    delete protobuf.generatedFilesBaseDir
+}

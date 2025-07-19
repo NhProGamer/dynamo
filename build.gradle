@@ -1,0 +1,74 @@
+plugins {
+    id 'java'
+    id 'com.gradleup.shadow' version '8.3.8' apply false
+    id 'com.google.protobuf' version '0.9.4' apply false
+}
+
+allprojects {
+    group = 'fr.nhsoul.dynamo'
+    version = '1.0.0'
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
+    }
+
+    dependencies {
+        testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
+        testImplementation 'org.mockito:mockito-core:5.8.0'
+        testImplementation 'org.mockito:mockito-junit-jupiter:5.8.0'
+        compileOnly 'org.jetbrains:annotations:24.1.0'
+    }
+
+    compileJava {
+        options.encoding = 'UTF-8'
+        options.release = 17
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
+
+// Configuration spécifique pour les modules avec Shadow
+configure(subprojects.findAll { it.name != 'dynamo-common' }) {
+    apply plugin: 'com.gradleup.shadow'
+
+    dependencies {
+        implementation project(':dynamo-common')  // ← RÉFÉRENCE AU MODULE COMMUN
+    }
+
+    build.dependsOn shadowJar
+}
+
+tasks.register('buildAll') {
+    dependsOn ':dynamo-paper:shadowJar', ':dynamo-velocity:shadowJar'
+
+    doLast {
+        println "✅ Build terminé avec succès !"
+        println "📦 JARs générés :"
+        println "  - dynamo-paper/build/libs/dynamo-paper-${version}.jar"
+        println "  - dynamo-velocity/build/libs/dynamo-velocity-${version}.jar"
+    }
+}
+
+tasks.register('cleanAll') {
+    dependsOn ':dynamo-common:clean', ':dynamo-paper:clean', ':dynamo-velocity:clean'
+}
+
+tasks.register('info') {
+    doLast {
+        println "🚀 Projet Dynamo v${version}"
+        println "📊 Modules :"
+        println "  - dynamo-common : Classes partagées"
+        println "  - dynamo-paper : Plugin PaperMC"
+        println "  - dynamo-velocity : Plugin Velocity"
+        println ""
+        println "🔧 Commandes : buildAll, cleanAll, info"
+    }
+}

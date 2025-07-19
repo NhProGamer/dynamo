@@ -1,0 +1,71 @@
+# Configuration NATS pour proxy Velocity
+nats:
+  # URL du serveur NATS
+  url: "nats://localhost:4222"
+  
+  # Timeout de connexion (millisecondes)
+  connection-timeout: 5000
+  
+  # Timeout de reconnexion (millisecondes)
+  reconnect-timeout: 2000
+  
+  # Nombre maximum de tentatives de reconnexion
+  max-reconnect-attempts: 10
+
+# Configuration du proxy
+proxy:
+  # Timeout pour considérer un serveur comme déconnecté (secondes)
+  server-timeout: 3
+  
+  # Intervalle de nettoyage des serveurs morts (secondes)
+  cleanup-interval: 3
+
+# Configuration des groupes de serveurs
+groups:
+  # Groupe lobby avec load balancing
+  lobby:
+    # Stratégie de répartition: ROUND_ROBIN, LEAST_PLAYERS, RANDOM
+    load-balancing: "LEAST_PLAYERS"
+    
+    # Serveur par défaut si aucun disponible
+    fallback-server: null
+    
+    # Priorité pour la connexion automatique
+    priority: 1
+  
+  # Groupe hub
+  hub:
+    load-balancing: "ROUND_ROBIN"
+    fallback-server: null
+    priority: 2
+  
+  # Groupe survival
+  survival:
+    load-balancing: "ROUND_ROBIN"
+    fallback-server: "lobby-1"
+    priority: 3
+
+# Configuration des topics NATS
+topics:
+  # Topic pour l'enregistrement des serveurs
+  register: "minecraft.server.register"
+  
+  # Topic pour les heartbeats
+  heartbeat: "minecraft.server.heartbeat"
+  
+  # Topic pour la déconnexion
+  unregister: "minecraft.server.unregister"
+  
+  # Pattern pour écouter tous les événements serveur
+  pattern: "minecraft.server.*"
+
+# Configuration du load balancing
+load-balancing:
+  # Serveur par défaut pour les nouvelles connexions
+  default-group: "lobby"
+  
+  # Activer la migration automatique si un serveur est plein
+  auto-migrate: true
+  
+  # Seuil de migration (pourcentage de joueurs)
+  migration-threshold: 90

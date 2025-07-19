@@ -1,0 +1,56 @@
+# Compiled class files
+*.class
+
+# Gradle build directory
+/build/
+/.gradle/
+
+# IntelliJ IDEA project files
+*.iml
+.idea/
+
+# Eclipse project files
+.classpath
+.project
+.settings/
+
+# VS Code project files
+.vscode/
+
+# Logs
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Distribution archives
+*.jar
+*.war
+*.ear
+
+# Local environment files
+.gradle/
+gradle-app.setting
+
+# Generated files
+out/
+
+# Kotlin specific
+*.kts~
+
+# Optional: ignore wrapper logs and unused .lock files
+gradle/wrapper/gradle-wrapper.jar
+**/gradle-wrapper.properties.lock
+
+# Ignore test reports
+/test-results/
+/reports/
+
+# Ignore dependency caches (optional, only if they’re not needed across environments)
+.caches/
+
+# Project exclude paths
+/dynamo-paper/build/
+/dynamo-velocity/build/
+/dynamo-velocity/build/classes/java/main/

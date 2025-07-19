@@ -1,0 +1,8 @@
+{
+  "id": "dynamo-velocity",
+  "name": "Dynamo Velocity",
+  "version": "${version}",
+  "description": "Service discovery for Velocity proxy with NATS",
+  "authors": ["Dynamo"],
+  "main": "fr.nhsoul.dynamo.velocity.DynamoVelocityPlugin"
+}

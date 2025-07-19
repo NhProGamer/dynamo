@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package dynamo.common.model;
+
+option java_package = "fr.nhsoul.dynamo.common.model.proto";
+option java_outer_classname = "ServerMessagesProto";
+
+message ServerInfo {
+  string name = 1;
+  string host = 2;
+  int32 port = 3;
+  repeated string groups = 4;
+  int64 timestamp = 5;
+  int32 current_players = 6;
+  int32 max_players = 7;
+}
+
+message ServerMetadata {
+}
+
+enum EventType {
+  REGISTER = 0;
+  HEARTBEAT = 1;
+  UNREGISTER = 2;
+  PLAYER_JOIN = 3;
+  PLAYER_LEAVE = 4;
+}
+
+message ServerEvent {
+  EventType type = 1;
+  ServerInfo server_info = 2;
+  int64 timestamp = 3;
+}

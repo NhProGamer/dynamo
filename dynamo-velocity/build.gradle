@@ -1,0 +1,90 @@
+plugins {
+    id("xyz.jpenilla.run-velocity") version "2.3.1"
+}
+
+dependencies {
+    // Module commun
+    implementation project(':dynamo-common')
+
+    // Protobuf (nécessaire pour les exceptions et classes)
+    implementation 'com.google.protobuf:protobuf-java:4.28.2'
+
+    // Velocity API
+    compileOnly 'com.velocitypowered:velocity-api:3.3.0-SNAPSHOT'
+    annotationProcessor 'com.velocitypowered:velocity-api:3.3.0-SNAPSHOT'
+
+    // NATS Client
+    implementation 'io.nats:jnats:2.17.2'
+
+    // YAML handling
+    implementation 'org.yaml:snakeyaml:2.2'
+
+    // Logging (provided by Velocity)
+    compileOnly 'org.slf4j:slf4j-api:2.0.9'
+
+    // Caffeine cache
+    implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8'
+}
+
+tasks {
+    runVelocity {
+        velocityVersion("3.4.0-SNAPSHOT")
+    }
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.release = 17
+    options.compilerArgs += ['-parameters']
+}
+
+jar {
+    archiveBaseName = 'dynamo-velocity'
+    archiveVersion = version
+}
+
+shadowJar {
+    archiveBaseName = 'dynamo-velocity'
+    archiveVersion = version
+    archiveClassifier = ''
+
+    // Relocation des dépendances
+    relocate 'io.nats', 'fr.nhsoul.dynamo.velocity.libs.nats'
+    relocate 'com.google.protobuf', 'fr.nhsoul.dynamo.velocity.libs.protobuf'
+    relocate 'org.yaml.snakeyaml', 'fr.nhsoul.dynamo.velocity.libs.snakeyaml'
+    relocate 'com.github.benmanes.caffeine', 'fr.nhsoul.dynamo.velocity.libs.caffeine'
+
+    // Exclusions
+    exclude 'META-INF/DEPENDENCIES'
+    exclude 'META-INF/LICENSE*'
+    exclude 'META-INF/NOTICE*'
+    exclude 'META-INF/maven/**'
+    exclude 'META-INF/versions/**'
+    exclude 'META-INF/services/javax.annotation.processing.Processor'
+
+    minimize {
+        exclude(dependency('io.nats:jnats:.*'))
+    }
+
+    manifest {
+        attributes(
+                'Implementation-Title': 'Dynamo Velocity',
+                'Implementation-Version': version,
+                'Implementation-Vendor': 'Dynamo Team'
+        )
+    }
+}
+
+processResources {
+    filteringCharset = 'UTF-8'
+
+    filesMatching('velocity-plugin.json') {
+        expand(
+                'version': version,
+                'group': group,
+                'id': 'dynamo-velocity',
+                'name': 'Dynamo Velocity',
+                'main': 'fr.nhsoul.dynamo.velocity.DynamoVelocityPlugin'
+        )
+    }
+}

@@ -1,0 +1,49 @@
+# Configuration NATS pour serveur PaperMC
+nats:
+  # URL du serveur NATS
+  url: "nats://localhost:4222"
+  
+  # Timeout de connexion (millisecondes)
+  connection-timeout: 5000
+  
+  # Timeout de reconnexion (millisecondes)
+  reconnect-timeout: 2000
+  
+  # Nombre maximum de tentatives de reconnexion
+  max-reconnect-attempts: 10
+
+# Configuration du serveur
+server:
+  # Nom du serveur (unique)
+  name: "lobby-1"
+  
+  # Groupes auxquels appartient ce serveur
+  groups:
+    - "lobby"
+    - "hub"
+  
+  # Port du serveur Minecraft
+  port: 25565
+  
+  # Adresse IP publique (auto-détectée si vide)
+  host: ""
+  
+  # Intervalle des heartbeats (secondes)
+  heartbeat-interval: 1
+  
+  # Métadonnées additionnelles
+  metadata:
+    max-players: 100
+    motd: "Serveur Lobby Principal"
+    version: "1.20.1"
+
+# Configuration des topics NATS
+topics:
+  # Topic pour l'enregistrement des serveurs
+  register: "minecraft.server.register"
+  
+  # Topic pour les heartbeats
+  heartbeat: "minecraft.server.heartbeat"
+  
+  # Topic pour la déconnexion
+  unregister: "minecraft.server.unregister"

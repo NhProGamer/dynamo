@@ -1,0 +1,7 @@
+name: DynamoPaper
+version: ${version}
+main: fr.nhsoul.dynamo.paper.DynamoPaperPlugin
+api-version: 1.20
+author: NhPro
+description: Service discovery for PaperMC servers with NATS
+website: https://github.com/NhProGamer/dynamo

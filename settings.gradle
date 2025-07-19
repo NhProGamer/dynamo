@@ -1,0 +1,35 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+
+    plugins {
+        id 'java'
+        id 'com.gradleup.shadow' version '8.3.8'
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        maven {
+            name = 'papermc'
+            url = 'https://repo.papermc.io/repository/maven-public/'
+        }
+        maven {
+            name = 'velocity'
+            url = 'https://nexus.velocitypowered.com/repository/maven-public/'
+        }
+        maven {
+            name = 'sonatype'
+            url = 'https://oss.sonatype.org/content/repositories/snapshots/'
+        }
+    }
+}
+
+rootProject.name = 'dynamo'
+
+include 'dynamo-common'    // ← MODULE COMMUN
+include 'dynamo-paper'
+include 'dynamo-velocity'
