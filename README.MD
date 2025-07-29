@@ -124,26 +124,6 @@ PaperMC Serveur → NATS → Velocity Proxy
 - **Plugin Velocity** : ~10 MB RAM
 - **Latence** : < 1ms
 
-## Problèmes courants
-
-### NATS non accessible
-```
-[ERROR] Impossible de se connecter à NATS
-```
-**Solution :** Vérifier que NATS est démarré sur le port 4222
-
-### Serveurs non détectés
-```
-[WARN] Aucun serveur découvert
-```
-**Solution :** Vérifier les logs PaperMC et la config NATS
-
-### Build failed
-```
-Could not find method dependencies()
-```
-**Solution :** Utiliser les fichiers Gradle fournis
-
 ## Structure du projet
 
 ```
@@ -170,7 +150,7 @@ dynamo/
 
 ## Licence
 
-MIT License - Voir [LICENSE](LICENSE)
+Custom License - Voir [LICENSE](LICENSE)
 
 ---
 
